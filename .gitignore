@@ -1,0 +1,17 @@
+node_modules/
+npm-debug.log
+
+.env
+*.env
+
+dist/
+build/
+coverage/
+
+package-lock.json
+yarn.lock
+
+logs/
+.pnpm-store/
+
+.vscode/
