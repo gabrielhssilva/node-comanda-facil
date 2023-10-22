@@ -1,9 +1,13 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
   cliente: String,
   tipoPao: String,
   tipoQueijo: String,
+  finalizado: {
+    type: Boolean,
+    default: false,
+  },
   complementos: [
     {
       type: String,
@@ -18,4 +22,4 @@ const OrderSchema = new mongoose.Schema({
 const Order =
   mongoose.models.Order || mongoose.model("Order", OrderSchema, "orders");
 
-export default Order;
+module.exports = Order;

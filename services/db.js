@@ -1,7 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 let connection = { isConnected: false };
 
@@ -25,4 +22,4 @@ async function dbConnection() {
   }
 }
 
-export default dbConnection;
+module.exports = dbConnection;
