@@ -8,6 +8,8 @@ dist/
 build/
 coverage/
 
+certificates/
+
 package-lock.json
 yarn.lock
 

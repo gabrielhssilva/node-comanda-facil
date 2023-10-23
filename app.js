@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const { Server } = require("socket.io");
 const orderSchema = require("./models/Order.js");
 
@@ -133,18 +134,25 @@ app.post("/api/pedido", async (req, res) => {
   }
 });
 
+const options = {
+  key: fs.readFileSync("./certificates/node-comanda.key"),
+  cert: fs.readFileSync("./certificates/node-comanda.pem"),
+};
+
 // ATUALIZAÇÃO EM TEMPO REAL
-const server = http.createServer(app);
+const server = https.createServer(options, app);
 
 // Configuração do Socket.IO
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
 
-io.on("connection", (socket) => {});
+io.on("connection", (socket) => {
+  // console.log("Cliente conectado");
+});
 
 const mongoose = require("mongoose");
 const Order = mongoose.model("Order");
