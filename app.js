@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const https = require("https");
-const fs = require("fs");
+const http = require("http");
 const { Server } = require("socket.io");
 const orderSchema = require("./models/Order.js");
 
@@ -134,19 +133,14 @@ app.post("/api/pedido", async (req, res) => {
   }
 });
 
-const options = {
-  key: fs.readFileSync("./certificates/node-comanda.key"),
-  cert: fs.readFileSync("./certificates/node-comanda.pem"),
-};
-
 // ATUALIZAÇÃO EM TEMPO REAL
-const server = https.createServer(options, app);
+const server = http.createServer(app);
 
 // Configuração do Socket.IO
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST"],
   },
 });
 
