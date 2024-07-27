@@ -26,10 +26,10 @@ const port = process.env.PORT || 3000;
 // Defina uma rota GET para buscar dados no MongoDB
 app.get("/api/pedidos", async (req, res) => {
   try {
-    const orders = await orderSchema.find({});
-    return res.json({ sucess: true, data: orders });
+    const orders = await orderSchema.find({}).sort({ createdAt: 1 });
+    return res.json({ success: true, data: orders });
   } catch (error) {
-    return res.json({ sucess: false, error });
+    return res.json({ success: false, error });
   }
 });
 
@@ -103,10 +103,11 @@ app.post("/api/pedido", async (req, res) => {
   try {
     const requestData = req.body;
     if (
-      !requestData.cliente ||
-      !requestData.tipoPao ||
-      !requestData.tipoQueijo ||
-      requestData.complementos.length === 0
+      (!requestData.cliente ||
+        !requestData.tipoPao ||
+        !requestData.tipoQueijo ||
+        requestData.complementos.length === 0) &&
+      !requestData.bossBurguer
     ) {
       throw "Preencha corretamente todos os dados do pedido.";
     }
